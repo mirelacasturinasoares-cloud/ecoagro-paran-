@@ -1,650 +1,280 @@
-/* =========================================
-
-   ECOAGRO PARANÁ - LOGIC & GRAPH INTERACTIVITY
-
-========================================= */
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-
-
-
-    // BARRA DE PROGRESSO DO TOPO
-
-    const progressBar = document.getElementById("progressBar");
-
-    window.addEventListener("scroll", () => {
-
-        const total = document.documentElement.scrollHeight - window.innerHeight;
-
-        const progresso = (window.scrollY / total) * 100;
-
-        if (progressBar) progressBar.style.width = progresso + "%";
-
-    });
-
-
-
-    // MODO ESCURO
-
-    const darkBtn = document.getElementById("darkModeBtn");
-
-    if (darkBtn) {
-
-        darkBtn.addEventListener("click", () => {
-
-            document.body.classList.toggle("dark");
-
-        });
-
-    }
-
-
-
-    // ANIMAR CONTADORES INICIAIS
-
-    function animarContador(id, valorFinal) {
-
-        const elemento = document.getElementById(id);
-
-        if (!elemento) return;
-
-        let atual = 0;
-
-        const incremento = Math.ceil(valorFinal / 100);
-
-        const intervalo = setInterval(() => {
-
-            atual += incremento;
-
-            if (atual >= valorFinal) {
-
-                atual = valorFinal;
-
-                clearInterval(intervalo);
-
-            }
-
-            elemento.textContent = atual.toLocaleString("pt-BR");
-
-        }, 15);
-
-    }
-
-    animarContador("contador1", 25000);
-
-    animarContador("contador2", 4200);
-
-    animarContador("contador3", 85);
-
-    animarContador("contador4", 320);
-
-
-
-    // COMPARADOR DE PRÁTICAS
-
-    window.mostrarSustentavel = function () {
-
-        document.getElementById("resultadoComparador").innerHTML = `
-
-            <h3 style="color:#2e7d32; margin-bottom:10px;">🌱 Práticas Rurais Sustentáveis</h3>
-
-            <p>Foco na rotação de culturas, plantio direto na palha, uso racional da água, energia limpa e respeito absoluto às faixas de mata ciliar. Preserva o ecossistema e assegura produtividade perpétua.</p>
-
-        `;
-
-    }
-
-    window.mostrarPredatorio = function () {
-
-        document.getElementById("resultadoComparador").innerHTML = `
-
-            <h3 style="color:#f44336; margin-bottom:10px;">⚠ Impactos da Agricultura Predatória</h3>
-
-            <p>Uso exaustivo do solo sem descanso, desmatamento ilegal de encostas, desperdício sistemático por canais de irrigação ineficientes e destruição de polinizadores nativos por pulverização incorreta.</p>
-
-        `;
-
-    }
-
-
-
-    // QUIZ DE 10 PERGUNTAS
-
-    const perguntas = [
-
-        { pergunta: "Qual recurso natural deve ser poupado com a irrigação inteligente?", alternativas: ["Água", "Solo", "Ar", "Fogo"], correta: 0 },
-
-        { pergunta: "A energia solar utilizada no campo é considerada uma fonte:", alternativas: ["Poluente", "Não renovável", "Limpa e renovável", "Esgotável"], correta: 2 },
-
-        { pergunta: "O reflorestamento de áreas degradadas ajuda diretamente a:", alternativas: ["Aumentar as queimadas", "Recuperar a biodiversidade e proteger nascentes", "Prejudicar a qualidade do solo", "Diminuir a umidade"], correta: 1 },
-
-        { pergunta: "Qual a principal função dos drones agrícolas na EcoAgro?", alternativas: ["Transportar sacas", "Espantar pássaros", "Monitorar lavouras de forma inteligente", "Substituir tratores"], correta: 2 },
-
-        { pergunta: "A rotação de culturas é uma técnica que serve para:", alternativas: ["Desgastar o solo", "Evitar a exaustão do solo e controlar pragas", "Gastar mais água", "Substituir sementes"], correta: 1 },
-
-        { pergunta: "O que caracteriza a Agricultura de Precisão?", alternativas: ["Ferramentas manuais", "Plantação de apenas uma semente", "Uso de dados e tecnologia para aplicar insumos no local certo", "Derrubada de florestas"], correta: 2 },
-
-        { pergunta: "Qual dessas opções é uma prática prejudicial ao meio ambiente?", alternativas: ["Energia eólica", "Compostagem orgânica", "Queimadas para limpeza de terreno", "Plantio direto na palha"], correta: 2 },
-
-        { pergunta: "O reaproveitamento de matéria orgânica para fertilizar o solo chama-se:", alternativas: ["Compostagem", "Descarte", "Poluição", "Inceneração"], correta: 0 },
-
-        { pergunta: "As APPs (Áreas de Preservação Permanente) servem para:", alternativas: ["Construir moradias", "Proteger recursos hídricos e estabilidade geológica", "Virar pastagem comum", "Testar químicos agrícolas"], correta: 1 },
-
-        { pergunta: "A agricultura sustentável equilibra três pilares fundamentais. Quais são?", alternativas: ["Dinheiro, pressa e máquinas", "Social, ambiental e econômico", "Desmatamento, exportação e lucro", "Química, tecnologia e velocidade"], correta: 1 }
-
-    ];
-
-
-
-    const perguntaQuiz = document.getElementById("texto-pergunta");
-
-    const alternativasQuiz = document.getElementById("opcoes-box");
-
-    const resultadoBox = document.getElementById("resultado-quiz");
-
-    const pontuacaoTexto = document.getElementById("pontuacao-texto");
-
-    const btnProximo = document.getElementById("btn-proximo");
-
-    const perguntaBox = document.getElementById("pergunta-box");
-
-    const secaoRanking = document.getElementById("ranking");
-
-    const secaoConquistas = document.getElementById("conquistas");
-
-
-
-    let indicePergunta = 0; let pontosQuiz = 0;
-
-
-
-    function carregarPergunta() {
-
-        if (!perguntaQuiz || !alternativasQuiz) return;
-
-        if (btnProximo) btnProximo.style.display = "none";
-
-        const atual = perguntas[indicePergunta];
-
-        perguntaQuiz.textContent = `${indicePergunta + 1}/10 - ${atual.pergunta}`;
-
-        alternativasQuiz.innerHTML = "";
-
-
-
-        atual.alternativas.forEach((opcao, indice) => {
-
-            const botao = document.createElement("button");
-
-            botao.textContent = opcao;
-
-            botao.addEventListener("click", () => {
-
-                const botoes = alternativasQuiz.querySelectorAll("button");
-
-                botoes.forEach(b => b.disabled = true);
-
-                if (indice === atual.correta) {
-
-                    pontosQuiz++;
-
-                    botao.style.background = "#4CAF50";
-
-                    botao.style.color = "white";
-
-                } else {
-
-                    botao.style.background = "#f44336";
-
-                    botao.style.color = "white";
-
-                    botoes[atual.correta].style.background = "#4CAF50";
-
-                    botoes[atual.correta].style.color = "white";
-
-                }
-
-                if (btnProximo) btnProximo.style.display = "block";
-
-            });
-
-            alternativasQuiz.appendChild(botao);
-
-        });
-
-    }
-
-
-
-    window.proximaPergunta = function () {
-
-        indicePergunta++;
-
-        if (indicePergunta < perguntas.length) { carregarPergunta(); } else { finalizarQuiz(); }
-
-    }
-
-
-
-    function finalizarQuiz() {
-
-        if (perguntaBox) perguntaBox.style.display = "none";
-
-        if (alternativasQuiz) alternativasQuiz.style.display = "none";
-
-        if (btnProximo) btnProximo.style.display = "none";
-
-        if (resultadoBox && pontuacaoTexto) {
-
-            resultadoBox.style.display = "block";
-
-            pontuacaoTexto.innerHTML = `Você concluiu! Total de acertos: <strong>${pontosQuiz}</strong> de <strong>10</strong>.`;
-
-            if (secaoRanking) secaoRanking.style.display = "block";
-
-            if (secaoConquistas) secaoConquistas.style.display = "block";
-
-            atualizarResultadosFinais();
-
-            secaoRanking.scrollIntoView({ behavior: 'smooth' });
-
-        }
-
-    }
-
-
-
-    function atualizarResultadosFinais() {
-
-        const nivelUsuario = document.getElementById("nivelUsuario");
-
-        const conquistasBox = document.getElementById("conquistasBox");
-
-        let estrelas = "⭐".repeat(Math.ceil(pontosQuiz / 2)) || "⭐";
-
-        
-
-        if (nivelUsuario) {
-
-            if (pontosQuiz === 10) nivelUsuario.innerHTML = `<h3>👑 Guardião da Natureza</h3><p>${estrelas} (Pontuação máxima alcançada!)</p>`;
-
-            else if (pontosQuiz >= 7) nivelUsuario.innerHTML = `<h3>🌱 Produtor Sustentável Consciente</h3><p>${estrelas}</p>`;
-
-            else if (pontosQuiz >= 5) nivelUsuario.innerHTML = `<h3>🚜 Técnico em Aprendizado</h3><p>${estrelas}</p>`;
-
-            else nivelUsuario.innerHTML = `<h3>⚠ Iniciante Ecológico</h3><p>${estrelas}</p>`;
-
-        }
-
-
-
-        if (conquistasBox) {
-
-            let html = "<div style='text-align:left; max-width:600px; margin:20px auto; line-height:1.8;'>";
-
-            html += `<p>🎖️ <strong>Selo Cidadão do Campo:</strong> Otorgado por concluir o percurso completo de avaliação teórica do Agrinho.</p>`;
-
-            if (pontosQuiz >= 6) html += `<p>🌿 <strong>Medalha Consciência Verde:</strong> Desbloqueada por demonstrar excelente base em biomas e conservação do solo.</p>`;
-
-            if (pontosQuiz === 10) html += `<p>👑 <strong>Troféu Excelência Agrinho 2026:</strong> Gabaritou todas as metas de conhecimento agronômico sustentável!</p>`;
-
-            if (window.simuladorFeito) html += `<p>📐 <strong>Distintivo Arquiteto Tecnológico:</strong> Concedido por testar arranjos técnicos no simulador integrado.</p>`;
-
-            html += "</div>";
-
-            conquistasBox.innerHTML = html;
-
-        }
-
-    }
-
-
-
-    window.reiniciarQuiz = function () {
-
-        indicePergunta = 0; pontosQuiz = 0;
-
-        if (perguntaBox) perguntaBox.style.display = "block";
-
-        if (alternativasQuiz) alternativasQuiz.style.display = "block";
-
-        if (resultadoBox) resultadoBox.style.display = "none";
-
-        if (secaoRanking) secaoRanking.style.display = "none";
-
-        if (secaoConquistas) secaoConquistas.style.display = "none";
-
-        carregarPergunta();
-
-    }
-
-    carregarPergunta();
-
-
-
-    // MAPA INTERATIVO
-
-    window.mostrarRegiao = function (regiao) {
-
-        const info = document.getElementById("infoRegiao");
-
-        const dados = {
-
-            norte: "🌱 <strong>Norte Pioneiro:</strong> Integração Lavoura-Pecuária-Floresta (ILPF) recuperando pastagens arenosas.",
-
-            oeste: "🚜 <strong>Oeste Paranaense:</strong> Uso massivo de biodigestores para conversão de dejetos em energia limpa.",
-
-            sudoeste: "🐄 <strong>Sudoeste:</strong> Modelos pioneiros de bacias leiteiras baseadas em pastoreio rotacionado.",
-
-            centro: "🌳 <strong>Centro-Sul:</strong> Manejo florestal certificado e forte preservação de remanescentes de Mata de Araucárias."
-
-        };
-
-        if(info) info.innerHTML = dados[regiao] || "Região desconhecida.";
-
-    }
-
-
-
-    // CURIOSIDADES ROTATIVAS
-
-    const campoCuriosidade = document.getElementById("curiosidade");
-
-    const fatos = [
-
-        "O Paraná é referência nacional no plantio direto, técnica que evita erosões do solo.",
-
-        "Sensores acoplados ao solo evitam desperdício irrigando lavouras apenas na dosagem necessária.",
-
-        "A agricultura de precisão pode diminuir em até 30% a aplicação de defensivos químicos.",
-
-        "As abelhas nativas são responsáveis pela polinização de grande parte das plantas cultivadas."
-
-    ];
-
-    if (campoCuriosidade) {
-
-        let fIdx = 0; campoCuriosidade.textContent = fatos[0];
-
-        setInterval(() => {
-
-            fIdx = (fIdx + 1) % fatos.length;
-
-            campoCuriosidade.textContent = fatos[fIdx];
-
-        }, 5000);
-
-    }
-
-
-
-    // ===================================================
-
-    // CANVAS GRÁFICO TOTALMENTE INTERATIVO (MOUSEMOVE)
-
-    // ===================================================
-
-    const canvas = document.getElementById("grafico");
-
-    if (canvas) {
-
-        const ctx = canvas.getContext("2d");
-
-        const anos = ["1950", "1980", "2010", "2023", "2026"];
-
-        const valores = [35, 55, 75, 115, 160]; // Índices fictícios de sustentabilidade
-
-        
-
-        let barWidth = 80;
-
-        let spacing = 60;
-
-        let startX = 80;
-
-        let canvasHeight = canvas.height;
-
-        let hoveredIndex = -1;
-
-
-
-        function desenharGrafico() {
-
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            
-
-            // Linhas de Fundo do Gráfico
-
-            ctx.strokeStyle = "#e0e0e0";
-
-            ctx.lineWidth = 1;
-
-            for(let l = 1; l <= 4; l++) {
-
-                let yLine = canvasHeight - (l * 75) - 50;
-
-                ctx.beginPath();
-
-                ctx.moveTo(50, yLine);
-
-                ctx.lineTo(canvas.width - 50, yLine);
-
-                ctx.stroke();
-
-            }
-
-
-
-            // Loop para renderizar as colunas e textos
-
-            valores.forEach((val, idx) => {
-
-                let x = startX + idx * (barWidth + spacing);
-
-                let y = canvasHeight - val - 50;
-
-                
-
-                // Se o mouse estiver sobre a coluna, muda a cor e adiciona sombra
-
-                if (idx === hoveredIndex) {
-
-                    ctx.fillStyle = "#2e7d32"; // Verde Escuro no Hover
-
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-
-                    ctx.shadowBlur = 10;
-
-                    
-
-                    // Caixa de Texto flutuante (Tooltip) com o valor exato
-
-                    ctx.fillStyle = "#111";
-
-                    ctx.font = "bold 14px Poppins";
-
-                    ctx.fillText(`Índice: ${val}%`, x + 3, y - 15);
-
-                } else {
-
-                    ctx.fillStyle = "#4CAF50"; // Verde Claro normal
-
-                    ctx.shadowBlur = 0;
-
-                }
-
-
-
-                // Desenha a barra retangular
-
-                ctx.fillRect(x, y, barWidth, val);
-
-                ctx.shadowBlur = 0; // Reseta a sombra para os próximos elementos
-
-
-
-                // Texto dos Anos (Eixo X)
-
-                ctx.fillStyle = "#555";
-
-                ctx.font = "500 14px Poppins";
-
-                ctx.fillText(anos[idx], x + 20, canvasHeight - 20);
-
-            });
-
-        }
-
-
-
-        // Listener para rastrear a posição do mouse no Canvas
-
-        canvas.addEventListener("mousemove", (event) => {
-
-            const rect = canvas.getBoundingClientRect();
-
-            const mouseX = event.clientX - rect.left;
-
-            const mouseY = event.clientY - rect.top;
-
-            let activeIdx = -1;
-
-
-
-            valores.forEach((val, idx) => {
-
-                let x = startX + idx * (barWidth + spacing);
-
-                let y = canvasHeight - val - 50;
-
-
-
-                // Verifica se as coordenadas do ponteiro colidem com os limites da barra
-
-                if (mouseX >= x && mouseX <= x + barWidth && mouseY >= y && mouseY <= canvasHeight - 50) {
-
-                    activeIdx = idx;
-
-                }
-
-            });
-
-
-
-            // Só redesenha se houver alteração de foco para não sobrecarregar
-
-            if (activeIdx !== hoveredIndex) {
-
-                hoveredIndex = activeIdx;
-
-                desenharGrafico();
-
-            }
-
-        });
-
-
-
-        // Reseta o foco quando o mouse sai da área útil do Canvas
-
-        canvas.addEventListener("mouseleave", () => {
-
-            hoveredIndex = -1;
-
-            desenharGrafico();
-
-        });
-
-
-
-        desenharGrafico(); // Chamada inicial
-
-    }
-
-
-
-    // ANIMAÇÃO DOS ELEMENTOS VIA SCROLL
-
-    const elementos = document.querySelectorAll("section, .card, .evento");
-
-    function revelar() {
-
-        const tela = window.innerHeight * 0.88;
-
-        elementos.forEach(item => {
-
-            const topo = item.getBoundingClientRect().top;
-
-            if (topo < tela) {
-
-                item.style.opacity = "1";
-
-                item.style.transform = "translateY(0)";
-
-            }
-
-        });
-
-    }
-
-    elementos.forEach(item => {
-
-        item.style.opacity = "0";
-
-        item.style.transform = "translateY(30px)";
-
-        item.style.transition = "0.6s ease-out";
-
-    });
-
-    window.addEventListener("scroll", revelar);
-
-    revelar();
-
-});
-
-
-
-// SIMULADOR DE INFRAESTRUTURA
-
-function calcularFazenda() {
-
-    const energia = parseInt(document.getElementById("energia").value);
-
-    const irrigacao = parseInt(document.getElementById("irrigacao").value);
-
-    const monitoramento = parseInt(document.getElementById("monitoramento").value);
-
-    const preservacao = parseInt(document.getElementById("preservacao").value);
-
-
-
-    const pontos = energia + irrigacao + monitoramento + preservacao;
-
-    window.simuladorFeito = true;
-
-    let resultado = "";
-
-
-
-    if (pontos >= 85) {
-
-        resultado = `<span style='color:#2e7d32;'>🏆 Nota: ${pontos}% — Fazenda Modelo!</span><br><small style='font-size:1rem; font-weight:400; color:#555;'>Parabéns! Sua propriedade atinge os maiores critérios técnicos de conservação e produtividade digital.</small>`;
-
-    } else if (pontos >= 60) {
-
-        resultado = `<span style='color:#ffa000;'>🌱 Nota: ${pontos}% — Fazenda Sustentável</span><br><small style='font-size:1rem; font-weight:400; color:#555;'>Bom trabalho. Sua fazenda adota boas diretrizes ecológicas, mas ainda pode investir mais em inteligência automatizada.</small>`;
-
-    } else {
-
-        resultado = `<span style='color:#f44336;'>⚠ Nota: ${pontos}% — Em Adaptação</span><br><small style='font-size:1rem; font-weight:400; color:#555;'>A infraestrutura atual está defasada. Considere aplicar fontes fotovoltaicas ou captação por sensores para progredir.</small>`;
-
-    }
-
-    document.getElementById("resultadoSimulador").innerHTML = resultado;
-
-} 
-
+===================================================
+   ECOAGRO PARANÁ - PROFESSIONAL EDITION (CORRIGIDO)
+   =================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+    --primary:#2e7d32;
+    --primary-light:#4caf50;
+    --primary-dark:#1b5e20;
+    --secondary:#81c784;
+    --white:#ffffff;
+    --light:#f5f7f4;
+    --dark:#121212;
+    --dark-card:#1e1e1e;
+    --text:#222;
+    --text-light:#666;
+    --shadow-sm:0 4px 10px rgba(0,0,0,.08);
+    --shadow-md:0 10px 25px rgba(0,0,0,.12);
+    --shadow-lg:0 20px 50px rgba(0,0,0,.15);
+    --radius:20px;
+}
+
+/* ===========================
+RESET
+=========================== */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+    scroll-behavior:smooth;
+}
+
+html{
+    overflow-x:hidden;
+}
+
+body{
+    background:var(--light);
+    color:var(--text);
+    overflow-x:hidden;
+    transition:.4s;
+}
+
+/* =webkit-scrollbar */
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:#ddd; }
+::-webkit-scrollbar-thumb{ background:var(--primary); border-radius:20px; }
+
+#progressBar{
+    position:fixed;
+    top:0; left:0;
+    height:5px; width:0;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    z-index:99999;
+}
+
+/* ===========================
+HEADER AJUSTADO (Mais discreto e compacto)
+=========================== */
+header{
+    position:fixed;
+    top:0; left:0; width:100%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 5%; /* Reduzido para não ocupar muito espaço vertical */
+    background: rgba(46,125,50,0.95);
+    backdrop-filter:blur(12px);
+    z-index:9999;
+    box-shadow:var(--shadow-sm);
+    transition: padding 0.3s ease;
+}
+
+.logo{
+    font-size:1.4rem;
+    font-weight:800;
+    color:white;
+    white-space: nowrap;
+}
+
+nav{
+    display:flex;
+    gap:20px;
+}
+
+nav a{
+    color:white;
+    text-decoration:none;
+    font-weight:500;
+    font-size: 0.9rem;
+    position:relative;
+    white-space: nowrap;
+}
+
+nav a::after{
+    content:"";
+    position:absolute;
+    left:0; bottom:-5px;
+    width:0; height:2px;
+    background:white;
+    transition:.3s;
+}
+
+nav a:hover::after{ width:100%; }
+
+.header-buttons{ display:flex; gap:10px; align-items:center; }
+
+#darkModeBtn, #menuMobile{
+    border:none;
+    padding:8px 12px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:1rem;
+}
+
+#menuMobile{ display:none; }
+
+/* ===========================
+FONTE DO SOBRE O PROJETO (Aumentada e Destacada)
+=========================== */
+.sobre-texto {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.sobre-texto p {
+    font-size: 1.35rem; /* Letra visivelmente maior e legível */
+    line-height: 1.9;
+    color: #333;
+    margin-bottom: 25px;
+    font-weight: 400;
+}
+
+body.dark .sobre-texto p {
+    color: #e0e0e0;
+}
+
+/* ===========================
+HERO
+=========================== */
+.hero{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding-top:100px;
+    background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url("../img/hero.jpg") center/cover;
+    color:white;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero h1{ font-size:4.5rem; font-weight:800; margin-bottom:20px; line-height:1.1; }
+.hero p{ font-size:1.2rem; line-height:1.8; margin-bottom:30px; }
+
+.hero-btn{
+    padding:18px 40px; border:none; border-radius:50px;
+    background:var(--primary-light); color:white;
+    font-size:1rem; font-weight:600; cursor:pointer; transition:.4s;
+}
+.hero-btn:hover{ transform: translateY(-5px) scale(1.05); }
+
+/* ===========================
+SECTIONS
+=========================== */
+section{ padding:100px 8%; }
+section h2{ text-align:center; font-size:2.8rem; color:var(--primary); margin-bottom:50px; }
+
+/* ===========================
+STATS
+=========================== */
+.stats{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:25px; }
+.stat-card{
+    background:white; padding:40px; border-radius:var(--radius);
+    text-align:center; box-shadow:var(--shadow-sm); transition:.4s;
+    position:relative; overflow:hidden;
+}
+.stat-card:hover{ transform: translateY(-10px); box-shadow:var(--shadow-lg); }
+.stat-card h2{ font-size:3rem; margin-bottom:10px; color: var(--primary); }
+
+/* ===========================
+CARDS
+=========================== */
+.card{ background:white; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:.4s; }
+.card:hover{ transform: translateY(-12px); box-shadow:var(--shadow-lg); }
+.card img{ width:100%; height:250px; object-fit:cover; }
+.card h3{ padding:20px; font-size:1.3rem; color: var(--primary-dark); }
+.card p{ padding:0 20px 25px; line-height:1.8; font-size: 0.95rem; }
+
+.tecnologias-grid, .objetivos-grid, .impacto-grid{
+    display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:30px;
+}
+
+/* ===========================
+TIMELINE
+=========================== */
+.timeline-container{ display:flex; justify-content:center; flex-wrap:wrap; gap:25px; }
+.evento{ background:white; padding:30px; width:220px; border-radius:var(--radius); text-align:center; box-shadow:var(--shadow-sm); transition:.4s; }
+.evento:hover{ transform:translateY(-8px); }
+.evento h3{ color: var(--primary); font-size: 1.6rem; margin-bottom: 10px; }
+
+/* ===========================
+QUIZ
+=========================== */
+.quiz-container{ background:white; max-width:850px; margin:auto; padding:40px; border-radius:var(--radius); box-shadow:var(--shadow-md); text-align: center;}
+.quiz-opcoes { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px; }
+.quiz-opcoes button { width: 100%; max-width: 500px; padding: 15px; border: 2px solid #ddd; background: #fff; color: #333; font-size: 1rem; font-weight: 500; border-radius: 12px; cursor: pointer; transition: 0.2s; }
+.quiz-opcoes button:hover { background: #f0f7f0; border-color: var(--primary); }
+
+/* ===========================
+MAPA
+=========================== */
+.regioes{ display:flex; justify-content:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; }
+.regioes button{ padding:15px 25px; border:none; border-radius:15px; background:var(--primary); color:white; cursor:pointer; font-weight: 600; }
+#infoRegiao{ background:white; padding:30px; max-width:800px; margin:auto; border-radius:var(--radius); box-shadow:var(--shadow-sm); text-align: center; font-size: 1.2rem; }
+
+/* ===========================
+GALERIA
+=========================== */
+.galeria-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.galeria-grid img{ width:100%; height:220px; object-fit:cover; border-radius:20px; transition:.4s; }
+.galeria-grid img:hover{ transform: scale(1.05); }
+
+#curiosidade{ background:white; padding:40px; max-width:900px; margin:auto; border-radius:20px; text-align:center; font-size:1.2rem; box-shadow:var(--shadow-sm); }
+
+/* ===========================
+CANVAS GRAPH
+=========================== */
+canvas{ display:block; margin:auto; background:white; border-radius:20px; max-width:100%; box-shadow:var(--shadow-md); cursor: pointer; }
+
+footer{ background:var(--primary-dark); color:white; text-align:center; padding:60px 20px; margin-top:50px; }
+
+/* ===========================
+DARK MODE
+=========================== */
+body.dark{ background:var(--dark); color:white; }
+body.dark .card, body.dark .evento, body.dark .stat-card, body.dark .quiz-container, body.dark #infoRegiao, body.dark #curiosidade, body.dark .simulador-box, body.dark .beneficio-card, body.dark .ranking-card, body.dark canvas { background:var(--dark-card); color:white; }
+body.dark .quiz-opcoes button { background: #2a2a2a; color: white; border-color: #444; }
+
+/* ===========================
+RESPONSIVE
+=========================== */
+@media(max-width:992px){
+    header { padding: 10px 2%; }
+    nav { gap: 10px; }
+    nav a { font-size: 0.8rem; }
+    .hero h1{ font-size:3.5rem; }
+}
+
+@media(max-width:768px){
+    #menuMobile{ display:block; background: transparent; color: white; border: 1px solid white;}
+    nav{ display:none; }
+    .hero h1{ font-size:2.5rem; }
+    section{ padding:60px 5%; }
+}
+
+/* ===========================
+COMPARADOR, SIMULADOR & OUTROS
+=========================== */
+.comparador-botoes{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom: 30px; }
+.comparador-botoes button{ background:linear-gradient(135deg,#2e7d32,#4caf50); color:#fff; border:none; padding:15px 30px; font-size:1.1rem; font-weight:700; border-radius:15px; cursor:pointer; box-shadow:var(--shadow-sm); min-width:260px; }
+#resultadoComparador{ max-width:800px; margin:auto; padding:25px; background: white; border-radius: 15px; box-shadow: var(--shadow-sm); }
+body.dark #resultadoComparador { background: var(--dark-card); }
+
+.simulador-box{ max-width:850px; margin:auto; background:white; padding:40px; border-radius:25px; box-shadow:var(--shadow-md); }
+.campo{ margin-bottom:20px; text-align: left;}
+.campo label{ display:block; font-size:1.1rem; font-weight:700; margin-bottom:80px; color:#2e7d32; margin-bottom: 8px;}
+.campo select{ width:100%; padding:14px; font-size:1rem; border-radius:12px; border:2px solid #ddd; background: #fff;}
+body.dark .campo select { background: #2a2a2a; color: white; border-color: #444; }
+.simulador-box button{ width:100%; padding:15px; font-size:1.1rem; font-weight:700; border:none; border-radius:12px; background:#2e7d32; color:white; cursor:pointer; margin-top:10px; }
+
+#resultadoSimulador{ margin-top:20px; font-size:1.4rem; font-weight:700; text-align:center; }
+.beneficios-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:25px; }
+.beneficio-card{ background:white; padding:35px; border-radius:20px; font-size:1.2rem; font-weight:600; text-align:center; box-shadow:var(--shadow-sm); }
+.ranking-card{ max-width:700px; margin:auto; background:white; padding:40px; border-radius:25px; text-align:center; box-shadow:var(--shadow-md); }
