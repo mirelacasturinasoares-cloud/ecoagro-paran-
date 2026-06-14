@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoAgro Paraná - Agrinho</title>
+<link rel="stylesheet" href="css/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div id="progressBar"></div>
+
+<header>
+<div class="logo">🌱 EcoAgro Paraná</div>
+<nav id="menu">
+    <a href="#inicio">Início</a>
+    <a href="#sobre">Sobre</a>
+    <a href="#tecnologias">Tecnologias</a>
+    <a href="#simulador">Simulador</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#mapa">Mapa</a>
+</nav>
+<div class="header-buttons">
+    <button id="darkModeBtn">🌙</button>
+    <button id="menuMobile">☰</button>
+</div>
+</header>
+
+<section id="inicio" class="hero">
+<div class="hero-overlay">
+    <h1>AGRO FORTE<br>FUTURO SUSTENTÁVEL</h1>
+    <p>Tecnologia, inovação e preservação ambiental trabalhando juntas para garantir um futuro melhor.</p>
+    <a href="#sobre"><button class="hero-btn">Explorar Projeto</button></a>
+</div>
+</section>
+
+<section class="stats">
+    <div class="stat-card"><h2 id="contador1">0</h2><p>Hectares Preservados</p></div>
+    <div class="stat-card"><h2 id="contador2">0</h2><p>Produtores Beneficiados</p></div>
+    <div class="stat-card"><h2 id="contador3">0</h2><p>Tecnologias Sustentáveis</p></div>
+    <div class="stat-card"><h2 id="contador4">0</h2><p>Espécies Protegidas</p></div>
+</section>
+
+<section id="sobre" class="sobre">
+<h2>Sobre o Projeto EcoAgro Paraná</h2>
+<div class="sobre-texto">
+    <p>Este projeto foi idealizado com o propósito de demonstrar que o desenvolvimento econômico do agronegócio e a conservação ambiental não são caminhos opostos, mas sim complementares. No cenário atual, o grande desafio do campo é produzir alimentos de forma eficiente para uma população global em constante crescimento, sem esgotar os recursos naturais do nosso planeta.</p>
+    <p>Através da implementação de tecnologias de ponta, como inteligência artificial, análise de dados e automação, a iniciativa EcoAgro Paraná evidencia que é perfeitamente possível otimizar as colheitas, reduzir drasticamente o desperdício de água e insumos, e proteger a biodiversidade local. Nosso objetivo é conscientizar as novas gerações sobre a urgência de um manejo rural inteligente e ecológico.</p>
+</div>
+</section>
+
+<section id="objetivos" class="objetivos">
+<h2>Objetivos Fundamentais</h2>
+<div class="objetivos-grid">
+    <div class="card"><h3>🌱 Sustentabilidade Prática</h3><p>Promover a conscientização sobre práticas agrícolas responsáveis que protejam as bacias hidrográficas e regenerem o solo.</p></div>
+    <div class="card"><h3>🚜 Inovação Tecnológica</h3><p>Apresentar como ferramentas digitais transformam propriedades tradicionais em fazendas inteligentes.</p></div>
+    <div class="card"><h3>🌎 Conscientização Coletiva</h3><p>Engajar estudantes e a comunidade na valorização e preservação da biodiversidade do Paraná.</p></div>
+</div>
+</section>
+
+<section id="tecnologias" class="tecnologias">
+<h2>Tecnologias Sustentáveis Aplicadas</h2>
+<div class="tecnologias-grid">
+    <div class="card"><img src="img/drone.jpg" alt=""><h3>Drones Agrícolas</h3><p>Utilizados para imageamento e mapeamento de alta precisão, detectando focos de pragas sem desperdício de defensivos.</p></div>
+    <div class="card"><img src="img/solar.jpg" alt=""><h3>Energia Solar</h3><p>Captação limpa e inesgotável para abastecer sistemas elétricos e de irrigação, diminuindo os gases poluentes.</p></div>
+    <div class="card"><img src="img/irrigacao.jpg" alt=""><h3>Irrigação Inteligente</h3><p>Sistemas automatizados integrados a sensores de umidade. Economia de até 50% dos recursos hídricos.</p></div>
+    <div class="card"><img src="img/floresta.jpg" alt=""><h3>Reflorestamento Dinâmico</h3><p>Recuperação de APPs para fixar o carbono na atmosfera e recriar corredores ecológicos fundamentais.</p></div>
+</div>
+</section>
+
+<section id="comparador" class="comparador">
+<div class="comparador-botoes">
+    <button onclick="mostrarSustentavel()">🌱 Agricultura Sustentável</button>
+    <button onclick="mostrarPredatorio()">⚠ Agricultura Predatória</button>
+</div>
+<div id="resultadoComparador">Clique em um dos botões acima para comparar as práticas rurais.</div>
+</section>
+
+<section id="impacto" class="impacto">
+<h2>Impacto Ambiental Positivo</h2>
+<div class="impacto-grid">
+    <div class="card"><h3>💧 Economia de Água</h3><p>Minimização do desperdício de água potável através do gotejamento subterrâneo e análise em tempo real.</p></div>
+    <div class="card"><h3>☀ Mitigação de Carbono</h3><p>Substituição progressiva de matrizes fósseis por fontes limpas e ecológicas na cadeia de produção.</p></div>
+    <div class="card"><h3>🌳 Biodiversidade Ativa</h3><p>Manutenção do solo fértil por meio do plantio direto, assegurando o abrigo de importantes polinizadores nativos.</p></div>
+</div>
+</section>
+
+<section id="timeline" class="timeline">
+<h2>Evolução Histórica da Agricultura</h2>
+<div class="timeline-container">
+    <div class="evento"><h3>1950</h3><p>Início da mecanização em massa e vinda dos primeiros tratores pesados.</p></div>
+    <div class="evento"><h3>1980</h3><p>Introdução dos primeiros sistemas integrados de manejo de pragas.</p></div>
+    <div class="evento"><h3>2010</h3><p>Popularização dos computadores de bordo e GPS na agricultura de precisão.</p></div>
+    <div class="evento"><h3>2023</h3><p>Expansão global do uso de inteligência artificial e sensores conectados via IoT.</p></div>
+    <div class="evento"><h3>2026</h3><p>Consolidação da agricultura inteligente totalmente focada em balanço de carbono zero.</p></div>
+</div>
+</section>
+
+<section id="beneficios">
+<h2>Benefícios da Sustentabilidade</h2>
+<div class="beneficios-grid">
+    <div class="beneficio-card">🌱 Conservação do Solo</div>
+    <div class="beneficio-card">💧 Economia de Água</div>
+    <div class="beneficio-card">🚜 Maior Produtividade</div>
+    <div class="beneficio-card">🌳 Preservação Ambiental</div>
+    <div class="beneficio-card">♻ Redução de Desperdícios</div>
+    <div class="beneficio-card">📈 Lucro Responsável</div>
+</div>
+</section>
+
+<section id="simulador">
+<h2>Monte Sua Fazenda Sustentável</h2>
+<div class="simulador-box">
+    <div class="campo">
+        <label>☀ Fonte de Energia</label>
+        <select id="energia">
+            <option value="0">Convencional (Fóssil)</option>
+            <option value="25">Solar Fotovoltaica</option>
+            <option value="20">Eólica Integrada</option>
+        </select>
+    </div>
+    <div class="campo">
+        <label>💧 Sistema de Irrigação</label>
+        <select id="irrigacao">
+            <option value="0">Tradicional (Aspersão Comum)</option>
+            <option value="20">Gotejamento Direcionado</option>
+            <option value="30">Inteligente com Sensor de Solo</option>
+        </select>
+    </div>
+    <div class="campo">
+        <label>🚁 Monitoramento Técnico</label>
+        <select id="monitoramento">
+            <option value="0">Manual / Visual</option>
+            <option value="20">Drones com Câmera Multiespectral</option>
+        </select>
+    </div>
+    <div class="campo">
+        <label>🌳 Área de Preservação</label>
+        <select id="preservacao">
+            <option value="0">Abaixo do limite legal</option>
+            <option value="25">Reserva Legal & APP preservadas</option>
+        </select>
+    </div>
+    <button onclick="calcularFazenda()">Analisar Eficiência da Fazenda</button>
+    <div id="resultadoSimulador"></div>
+</div>
+</section>
+
+<section id="quiz">
+<h2>Quiz EcoAgro</h2>
+<div class="quiz-container">
+    <div id="pergunta-box"><p id="texto-pergunta">Carregando perguntas...</p></div>
+    <div id="opcoes-box" class="quiz-opcoes"></div>
+    <button id="btn-proximo" onclick="proximaPergunta()" style="display: none; margin: 20px auto; padding: 12px 25px; border: none; background: #2e7d32; color: #fff; border-radius: 8px; cursor: pointer; font-weight: 600;">Próxima Pergunta</button>
+    <div id="resultado-quiz" style="display: none;">
+        <h3>Fim do Desafio!</h3>
+        <p id="pontuacao-texto"></p>
+        <button onclick="reiniciarQuiz()" style="padding: 10px 20px; border: none; background: #2e7d32; color: white; border-radius: 8px; cursor: pointer; font-weight: 600; margin-top: 15px;">Refazer Quiz</button>
+    </div>
+</div>
+</section>
+
+<section id="ranking" style="display: none;">
+<h2>Ranking Ecológico</h2>
+<div class="ranking-card">
+    <h3>🏆 Seu Desempenho</h3>
+    <div id="nivelUsuario"></div>
+</div>
+</section>
+
+<section id="conquistas" class="conquistas" style="display: none;">
+<h2>Suas Conquistas Desbloqueadas</h2>
+<div id="conquistasBox"></div>
+</section>
+
+<section id="mapa">
+<h2>Paraná Sustentável</h2>
+<div class="regioes">
+    <button onclick="mostrarRegiao('norte')">Norte</button>
+    <button onclick="mostrarRegiao('oeste')">Oeste</button>
+    <button onclick="mostrarRegiao('sudoeste')">Sudoeste</button>
+    <button onclick="mostrarRegiao('centro')">Centro</button>
+</div>
+<div id="infoRegiao">Selecione uma macrorregião no menu acima para avaliar dados geográficos locais.</div>
+</section>
+
+<section class="curiosidades">
+<h2>Você Sabia?</h2>
+<div id="curiosidade">Carregando dados informativos...</div>
+</section>
+
+<section>
+<h2>Evolução do Índice de Sustentabilidade (Interativo)</h2>
+<p style="text-align: center; margin-bottom: 20px; color: #666;">Passe o mouse por cima das colunas para conferir os dados exatos de evolução.</p>
+<canvas id="grafico" width="800" height="400"></canvas>
+</section>
+
+<section id="metas2050">
+<h2>Plano Estratégico: Rumo às Metas de 2050</h2>
+<div class="timeline-container">
+    <div class="evento"><h3>Meta 2030</h3><p>Ampliação massiva de infraestruturas de energia solar e eólica em 70% das cooperativas paranaenses.</p></div>
+    <div class="evento"><h3>Meta 2040</h3><p>Redução drástica e desperdício zero no manejo de recursos hídricos através de inteligência climática de satélites.</p></div>
+    <div class="evento"><h3>Meta 2050</h3><p>Consolidação do ecossistema agrícola estadual operando em neutralidade total de carbono e regeneração nativa.</p></div>
+</div>
+</section>
+
+<footer>
+<h3>EcoAgro Paraná</h3>
+<p>Projeto acadêmico tecnológico desenvolvido para o Concurso Agrinho 2026.</p>
+<p>Agro Forte, Futuro Sustentável.</p>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>>
