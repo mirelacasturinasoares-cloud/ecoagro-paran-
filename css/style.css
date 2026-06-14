@@ -1,559 +1,280 @@
 /* ===================================================
-
    ECOAGRO PARANÁ - PROFESSIONAL EDITION (CORRIGIDO)
-
    =================================================== */
-
-
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
-
-
 :root{
-
     --primary:#2e7d32;
-
     --primary-light:#4caf50;
-
     --primary-dark:#1b5e20;
-
     --secondary:#81c784;
-
     --white:#ffffff;
-
     --light:#f5f7f4;
-
     --dark:#121212;
-
     --dark-card:#1e1e1e;
-
     --text:#222;
-
     --text-light:#666;
-
     --shadow-sm:0 4px 10px rgba(0,0,0,.08);
-
     --shadow-md:0 10px 25px rgba(0,0,0,.12);
-
     --shadow-lg:0 20px 50px rgba(0,0,0,.15);
-
     --radius:20px;
-
 }
-
-
 
 /* ===========================
-
 RESET
-
 =========================== */
-
 *{
-
     margin:0;
-
     padding:0;
-
     box-sizing:border-box;
-
     font-family:'Poppins',sans-serif;
-
     scroll-behavior:smooth;
-
 }
-
-
 
 html{
-
     overflow-x:hidden;
-
 }
-
-
 
 body{
-
     background:var(--light);
-
     color:var(--text);
-
     overflow-x:hidden;
-
     transition:.4s;
-
 }
-
-
 
 /* =webkit-scrollbar */
-
 ::-webkit-scrollbar{ width:10px; }
-
 ::-webkit-scrollbar-track{ background:#ddd; }
-
 ::-webkit-scrollbar-thumb{ background:var(--primary); border-radius:20px; }
 
-
-
 #progressBar{
-
     position:fixed;
-
     top:0; left:0;
-
     height:5px; width:0;
-
     background: linear-gradient(90deg, var(--primary), var(--secondary));
-
     z-index:99999;
-
 }
-
-
 
 /* ===========================
-
 HEADER AJUSTADO (Mais discreto e compacto)
-
 =========================== */
-
 header{
-
     position:fixed;
-
     top:0; left:0; width:100%;
-
     display:flex;
-
     justify-content:space-between;
-
     align-items:center;
-
     padding:10px 5%; /* Reduzido para não ocupar muito espaço vertical */
-
     background: rgba(46,125,50,0.95);
-
     backdrop-filter:blur(12px);
-
     z-index:9999;
-
     box-shadow:var(--shadow-sm);
-
     transition: padding 0.3s ease;
-
 }
-
-
 
 .logo{
-
     font-size:1.4rem;
-
     font-weight:800;
-
     color:white;
-
     white-space: nowrap;
-
 }
-
-
 
 nav{
-
     display:flex;
-
     gap:20px;
-
 }
-
-
 
 nav a{
-
     color:white;
-
     text-decoration:none;
-
     font-weight:500;
-
     font-size: 0.9rem;
-
     position:relative;
-
     white-space: nowrap;
-
 }
-
-
 
 nav a::after{
-
     content:"";
-
     position:absolute;
-
     left:0; bottom:-5px;
-
     width:0; height:2px;
-
     background:white;
-
     transition:.3s;
-
 }
-
-
 
 nav a:hover::after{ width:100%; }
 
-
-
 .header-buttons{ display:flex; gap:10px; align-items:center; }
 
-
-
 #darkModeBtn, #menuMobile{
-
     border:none;
-
     padding:8px 12px;
-
     border-radius:12px;
-
     cursor:pointer;
-
     font-size:1rem;
-
 }
-
-
 
 #menuMobile{ display:none; }
 
-
-
 /* ===========================
-
 FONTE DO SOBRE O PROJETO (Aumentada e Destacada)
-
 =========================== */
-
 .sobre-texto {
-
     max-width: 900px;
-
     margin: 0 auto;
-
     padding: 20px;
-
     text-align: center;
-
 }
-
-
 
 .sobre-texto p {
-
     font-size: 1.35rem; /* Letra visivelmente maior e legível */
-
     line-height: 1.9;
-
     color: #333;
-
     margin-bottom: 25px;
-
     font-weight: 400;
-
 }
-
-
 
 body.dark .sobre-texto p {
-
     color: #e0e0e0;
-
 }
-
-
 
 /* ===========================
-
 HERO
-
 =========================== */
-
 .hero{
-
     height:100vh;
-
     display:flex;
-
     justify-content:center;
-
     align-items:center;
-
     text-align:center;
-
     padding-top:100px;
-
     background: linear-gradient(rgba(0,0,0,.45), rgba(0,0,0,.45)), url("../img/hero.jpg") center/cover;
-
     color:white;
-
     position:relative;
-
     overflow:hidden;
-
 }
-
-
 
 .hero h1{ font-size:4.5rem; font-weight:800; margin-bottom:20px; line-height:1.1; }
-
 .hero p{ font-size:1.2rem; line-height:1.8; margin-bottom:30px; }
 
-
-
 .hero-btn{
-
     padding:18px 40px; border:none; border-radius:50px;
-
     background:var(--primary-light); color:white;
-
     font-size:1rem; font-weight:600; cursor:pointer; transition:.4s;
-
 }
-
 .hero-btn:hover{ transform: translateY(-5px) scale(1.05); }
 
-
-
 /* ===========================
-
 SECTIONS
-
 =========================== */
-
 section{ padding:100px 8%; }
-
 section h2{ text-align:center; font-size:2.8rem; color:var(--primary); margin-bottom:50px; }
 
-
-
 /* ===========================
-
 STATS
-
 =========================== */
-
 .stats{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:25px; }
-
 .stat-card{
-
     background:white; padding:40px; border-radius:var(--radius);
-
     text-align:center; box-shadow:var(--shadow-sm); transition:.4s;
-
     position:relative; overflow:hidden;
-
 }
-
 .stat-card:hover{ transform: translateY(-10px); box-shadow:var(--shadow-lg); }
-
 .stat-card h2{ font-size:3rem; margin-bottom:10px; color: var(--primary); }
 
-
-
 /* ===========================
-
 CARDS
-
 =========================== */
-
 .card{ background:white; border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow-sm); transition:.4s; }
-
 .card:hover{ transform: translateY(-12px); box-shadow:var(--shadow-lg); }
-
 .card img{ width:100%; height:250px; object-fit:cover; }
-
 .card h3{ padding:20px; font-size:1.3rem; color: var(--primary-dark); }
-
 .card p{ padding:0 20px 25px; line-height:1.8; font-size: 0.95rem; }
 
-
-
 .tecnologias-grid, .objetivos-grid, .impacto-grid{
-
     display:grid; grid-template-columns: repeat(auto-fit,minmax(280px,1fr)); gap:30px;
-
 }
 
-
-
 /* ===========================
-
 TIMELINE
-
 =========================== */
-
 .timeline-container{ display:flex; justify-content:center; flex-wrap:wrap; gap:25px; }
-
 .evento{ background:white; padding:30px; width:220px; border-radius:var(--radius); text-align:center; box-shadow:var(--shadow-sm); transition:.4s; }
-
 .evento:hover{ transform:translateY(-8px); }
-
 .evento h3{ color: var(--primary); font-size: 1.6rem; margin-bottom: 10px; }
 
-
-
 /* ===========================
-
 QUIZ
-
 =========================== */
-
 .quiz-container{ background:white; max-width:850px; margin:auto; padding:40px; border-radius:var(--radius); box-shadow:var(--shadow-md); text-align: center;}
-
 .quiz-opcoes { display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 20px; }
-
 .quiz-opcoes button { width: 100%; max-width: 500px; padding: 15px; border: 2px solid #ddd; background: #fff; color: #333; font-size: 1rem; font-weight: 500; border-radius: 12px; cursor: pointer; transition: 0.2s; }
-
 .quiz-opcoes button:hover { background: #f0f7f0; border-color: var(--primary); }
 
-
-
 /* ===========================
-
 MAPA
-
 =========================== */
-
 .regioes{ display:flex; justify-content:center; flex-wrap:wrap; gap:15px; margin-bottom:25px; }
-
 .regioes button{ padding:15px 25px; border:none; border-radius:15px; background:var(--primary); color:white; cursor:pointer; font-weight: 600; }
-
 #infoRegiao{ background:white; padding:30px; max-width:800px; margin:auto; border-radius:var(--radius); box-shadow:var(--shadow-sm); text-align: center; font-size: 1.2rem; }
 
-
-
 /* ===========================
-
 GALERIA
-
 =========================== */
-
 .galeria-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
-
 .galeria-grid img{ width:100%; height:220px; object-fit:cover; border-radius:20px; transition:.4s; }
-
 .galeria-grid img:hover{ transform: scale(1.05); }
-
-
 
 #curiosidade{ background:white; padding:40px; max-width:900px; margin:auto; border-radius:20px; text-align:center; font-size:1.2rem; box-shadow:var(--shadow-sm); }
 
-
-
 /* ===========================
-
 CANVAS GRAPH
-
 =========================== */
-
 canvas{ display:block; margin:auto; background:white; border-radius:20px; max-width:100%; box-shadow:var(--shadow-md); cursor: pointer; }
-
-
 
 footer{ background:var(--primary-dark); color:white; text-align:center; padding:60px 20px; margin-top:50px; }
 
-
-
 /* ===========================
-
 DARK MODE
-
 =========================== */
-
 body.dark{ background:var(--dark); color:white; }
-
 body.dark .card, body.dark .evento, body.dark .stat-card, body.dark .quiz-container, body.dark #infoRegiao, body.dark #curiosidade, body.dark .simulador-box, body.dark .beneficio-card, body.dark .ranking-card, body.dark canvas { background:var(--dark-card); color:white; }
-
 body.dark .quiz-opcoes button { background: #2a2a2a; color: white; border-color: #444; }
 
-
-
 /* ===========================
-
 RESPONSIVE
-
 =========================== */
-
 @media(max-width:992px){
-
     header { padding: 10px 2%; }
-
     nav { gap: 10px; }
-
     nav a { font-size: 0.8rem; }
-
     .hero h1{ font-size:3.5rem; }
-
 }
-
-
 
 @media(max-width:768px){
-
     #menuMobile{ display:block; background: transparent; color: white; border: 1px solid white;}
-
     nav{ display:none; }
-
     .hero h1{ font-size:2.5rem; }
-
     section{ padding:60px 5%; }
-
 }
 
-
-
 /* ===========================
-
 COMPARADOR, SIMULADOR & OUTROS
-
 =========================== */
-
 .comparador-botoes{ display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom: 30px; }
-
 .comparador-botoes button{ background:linear-gradient(135deg,#2e7d32,#4caf50); color:#fff; border:none; padding:15px 30px; font-size:1.1rem; font-weight:700; border-radius:15px; cursor:pointer; box-shadow:var(--shadow-sm); min-width:260px; }
-
 #resultadoComparador{ max-width:800px; margin:auto; padding:25px; background: white; border-radius: 15px; box-shadow: var(--shadow-sm); }
-
 body.dark #resultadoComparador { background: var(--dark-card); }
 
-
-
 .simulador-box{ max-width:850px; margin:auto; background:white; padding:40px; border-radius:25px; box-shadow:var(--shadow-md); }
-
 .campo{ margin-bottom:20px; text-align: left;}
-
 .campo label{ display:block; font-size:1.1rem; font-weight:700; margin-bottom:80px; color:#2e7d32; margin-bottom: 8px;}
-
 .campo select{ width:100%; padding:14px; font-size:1rem; border-radius:12px; border:2px solid #ddd; background: #fff;}
-
 body.dark .campo select { background: #2a2a2a; color: white; border-color: #444; }
-
 .simulador-box button{ width:100%; padding:15px; font-size:1.1rem; font-weight:700; border:none; border-radius:12px; background:#2e7d32; color:white; cursor:pointer; margin-top:10px; }
 
-
-
 #resultadoSimulador{ margin-top:20px; font-size:1.4rem; font-weight:700; text-align:center; }
-
 .beneficios-grid{ display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:25px; }
-
 .beneficio-card{ background:white; padding:35px; border-radius:20px; font-size:1.2rem; font-weight:600; text-align:center; box-shadow:var(--shadow-sm); }
-
 .ranking-card{ max-width:700px; margin:auto; background:white; padding:40px; border-radius:25px; text-align:center; box-shadow:var(--shadow-md); }
