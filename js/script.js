@@ -12,6 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
         if (progressBar) progressBar.style.width = progresso + "%";
     });
 
+    // INTERATIVIDADE DO MENU MOBILE
+    const menuMobile = document.getElementById("menuMobile");
+    const navMenu = document.querySelector("nav");
+
+    if (menuMobile && navMenu) {
+        menuMobile.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
+
+        const linksNav = navMenu.querySelectorAll("a");
+        linksNav.forEach(link => {
+            link.addEventListener("click", () => {
+                navMenu.classList.remove("active");
+            });
+        });
+    }
+
     // MODO ESCURO
     const darkBtn = document.getElementById("darkModeBtn");
     if (darkBtn) {
@@ -141,7 +158,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (conquistasBox) {
             let html = "<div style='text-align:left; max-width:600px; margin:20px auto; line-height:1.8;'>";
-            html += `<p>🎖️ <strong>Selo Cidadão do Campo:</strong> Otorgado por concluir o percurso completo de avaliação teórica do Agrinho.</p>`;
+            html += `<p>🎖️ <strong>Selo Cidadão do Campo:</strong> Outorgado por concluir o percurso completo de avaliação teórica do Agrinho.</p>`;
             if (pontosQuiz >= 6) html += `<p>🌿 <strong>Medalha Consciência Verde:</strong> Desbloqueada por demonstrar excelente base em biomas e conservação do solo.</p>`;
             if (pontosQuiz === 10) html += `<p>👑 <strong>Troféu Excelência Agrinho 2026:</strong> Gabaritou todas as metas de conhecimento agronômico sustentável!</p>`;
             if (window.simuladorFeito) html += `<p>📐 <strong>Distintivo Arquiteto Tecnológico:</strong> Concedido por testar arranjos técnicos no simulador integrado.</p>`;
@@ -165,7 +182,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.mostrarRegiao = function (regiao) {
         const info = document.getElementById("infoRegiao");
         const dados = {
-            norte: "🌱 <strong>Norte Pioneiro:</strong> Integração Lavoura-Pecuária-Floresta (ILPF) recuperando pastagens arenosas.",
+            norte: "🌱 <strong>Norte Pioneiro:</strong> Integração Lavoura-Pecuária-Floresta (ILPF) recuperando pastagens arenas.",
             oeste: "🚜 <strong>Oeste Paranaense:</strong> Uso massivo de biodigestores para conversão de dejetos em energia limpa.",
             sudoeste: "🐄 <strong>Sudoeste:</strong> Modelos pioneiros de bacias leiteiras baseadas em pastoreio rotacionado.",
             centro: "🌳 <strong>Centro-Sul:</strong> Manejo florestal certificado e forte preservação de remanescentes de Mata de Araucárias."
@@ -190,17 +207,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ===================================================
-    // CANVAS GRÁFICO TOTALMENTE INTERATIVO (MOUSEMOVE)
+    // CANVAS GRÁFICO TOTALMENTE INTERATIVO (AJUSTADO)
     // ===================================================
     const canvas = document.getElementById("grafico");
     if (canvas) {
         const ctx = canvas.getContext("2d");
         const anos = ["1950", "1980", "2010", "2023", "2026"];
-        const valores = [35, 55, 75, 115, 160]; // Índices fictícios de sustentabilidade
+        const valores = [35, 55, 75, 115, 160];
         
-        let barWidth = 80;
-        let spacing = 60;
-        let startX = 80;
+        let barWidth = 70;
+        let spacing = 50;
+        let startX = 60;
         let canvasHeight = canvas.height;
         let hoveredIndex = -1;
 
@@ -213,8 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
             for(let l = 1; l <= 4; l++) {
                 let yLine = canvasHeight - (l * 75) - 50;
                 ctx.beginPath();
-                ctx.moveTo(50, yLine);
-                ctx.lineTo(canvas.width - 50, yLine);
+                ctx.moveTo(30, yLine);
+                ctx.lineTo(canvas.width - 30, yLine);
                 ctx.stroke();
             }
 
@@ -223,67 +240,74 @@ document.addEventListener("DOMContentLoaded", () => {
                 let x = startX + idx * (barWidth + spacing);
                 let y = canvasHeight - val - 50;
                 
-                // Se o mouse estiver sobre a coluna, muda a cor e adiciona sombra
                 if (idx === hoveredIndex) {
-                    ctx.fillStyle = "#2e7d32"; // Verde Escuro no Hover
-                    ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
-                    ctx.shadowBlur = 10;
+                    ctx.fillStyle = "#2e7d32";
+                    ctx.shadowColor = "rgba(0, 0, 0, 0.2)";
+                    ctx.shadowBlur = 8;
                     
-                    // Caixa de Texto flutuante (Tooltip) com o valor exato
-                    ctx.fillStyle = "#111";
-                    ctx.font = "bold 14px Poppins";
-                    ctx.fillText(`Índice: ${val}%`, x + 3, y - 15);
+                    ctx.fillStyle = document.body.classList.contains("dark") ? "#fff" : "#111";
+                    ctx.font = "bold 13px Poppins";
+                    ctx.textAlign = "center";
+                    ctx.fillText(`Índice: ${val}%`, x + (barWidth / 2), y - 15);
                 } else {
-                    ctx.fillStyle = "#4CAF50"; // Verde Claro normal
+                    ctx.fillStyle = "#4CAF50";
                     ctx.shadowBlur = 0;
                 }
 
-                // Desenha a barra retangular
                 ctx.fillRect(x, y, barWidth, val);
-                ctx.shadowBlur = 0; // Reseta a sombra para os próximos elementos
+                ctx.shadowBlur = 0;
 
                 // Texto dos Anos (Eixo X)
-                ctx.fillStyle = "#555";
-                ctx.font = "500 14px Poppins";
-                ctx.fillText(anos[idx], x + 20, canvasHeight - 20);
+                ctx.fillStyle = document.body.classList.contains("dark") ? "#bbb" : "#555";
+                ctx.font = "500 13px Poppins";
+                ctx.textAlign = "center";
+                ctx.fillText(anos[idx], x + (barWidth / 2), canvasHeight - 20);
             });
         }
 
         // Listener para rastrear a posição do mouse no Canvas
         canvas.addEventListener("mousemove", (event) => {
             const rect = canvas.getBoundingClientRect();
-            const mouseX = event.clientX - rect.left;
-            const mouseY = event.clientY - rect.top;
+            // Correção de escala caso o canvas mude de tamanho de forma responsiva
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+
+            const mouseX = (event.clientX - rect.left) * scaleX;
+            const mouseY = (event.clientY - rect.top) * scaleY;
             let activeIdx = -1;
 
             valores.forEach((val, idx) => {
                 let x = startX + idx * (barWidth + spacing);
                 let y = canvasHeight - val - 50;
 
-                // Verifica se as coordenadas do ponteiro colidem com os limites da barra
                 if (mouseX >= x && mouseX <= x + barWidth && mouseY >= y && mouseY <= canvasHeight - 50) {
                     activeIdx = idx;
                 }
             });
 
-            // Só redesenha se houver alteração de foco para não sobrecarregar
             if (activeIdx !== hoveredIndex) {
                 hoveredIndex = activeIdx;
                 desenharGrafico();
             }
         });
 
-        // Reseta o foco quando o mouse sai da área útil do Canvas
         canvas.addEventListener("mouseleave", () => {
             hoveredIndex = -1;
             desenharGrafico();
         });
 
-        desenharGrafico(); // Chamada inicial
+        desenharGrafico();
+        
+        // Redesenha caso o modo escuro seja clicado para alterar a cor das fontes
+        if (darkBtn) {
+            darkBtn.addEventListener("click", () => {
+                setTimeout(desenharGrafico, 50);
+            });
+        }
     }
 
-    // ANIMAÇÃO DOS ELEMENTOS VIA SCROLL
-    const elementos = document.querySelectorAll("section, .card, .evento");
+    // ANIMAÇÃO DOS ELEMENTOS VIA SCROLL (Ignorando o canvas para evitar travamento de opacidade)
+    const elementos = document.querySelectorAll("section:not(#grafico-section), .card, .evento");
     function revelar() {
         const tela = window.innerHeight * 0.88;
         elementos.forEach(item => {
@@ -295,9 +319,11 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     elementos.forEach(item => {
-        item.style.opacity = "0";
-        item.style.transform = "translateY(30px)";
-        item.style.transition = "0.6s ease-out";
+        if (item.id !== "grafico") {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(30px)";
+            item.style.transition = "0.6s ease-out";
+        }
     });
     window.addEventListener("scroll", revelar);
     revelar();
