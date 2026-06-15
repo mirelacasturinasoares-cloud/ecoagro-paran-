@@ -36,11 +36,22 @@
 </div>
 </section>
 
-<section class="stats">
-    <div class="stat-card"><h2 id="contador1">0</h2><p>Hectares Preservados</p></div>
-    <div class="stat-card"><h2 id="contador2">0</h2><p>Produtores Beneficiados</p></div>
-    <div class="stat-card"><h2 id="contador3">0</h2><p>Tecnologias Sustentáveis</p></div>
-    <div class="stat-card"><h2 id="contador4">0</h2><p>Espécies Protegidas</p></div>
+<section class="stats-section" style="padding: 40px 8%; text-align: center;">
+    <div class="stats">
+        <div class="stat-card"><h2 id="contador1">0</h2><p>Hectares Preservados</p></div>
+        <div class="stat-card"><h2 id="contador2">0</h2><p>Produtores Beneficiados</p></div>
+        <div class="stat-card"><h2 id="contador3">0</h2><p>Tecnologias Sustentáveis</p></div>
+        <div class="stat-card"><h2 id="contador4">0</h2><p>Espécies Protegidas</p></div>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 20px; background: rgba(46, 125, 50, 0.1); border-radius: 15px; max-width: 900px; margin-left: auto; margin-right: auto; font-size: 0.95rem; line-height: 1.6; border-left: 5px solid #2e7d32;">
+        <p style="margin-bottom: 8px; color: #222; font-weight: 500;">
+            <strong>Contexto dos Dados:</strong> Os números acima refletem as metas acumuladas de preservação e monitoramento de propriedades integradas a programas ecológicos estaduais no Paraná, demonstrando o impacto real do uso da tecnologia aliada ao cumprimento do Código Florestal Brasileiro.
+        </p>
+        <p style="font-size: 0.85rem; color: #555; font-style: italic; margin: 0;">
+            <strong>Fonte dos dados indicativos:</strong> Estimativas baseadas em relatórios de monitoramento do Cadastro Ambiental Rural (CAR/IAT-PR) e dados de inteligência territorial e preservação da vegetação nativa da <strong>Embrapa Monitoramento por Satélite</strong>.
+        </p>
+    </div>
 </section>
 
 <section id="sobre" class="sobre">
@@ -191,10 +202,12 @@
 <div id="curiosidade">Carregando dados informativos...</div>
 </section>
 
-<section>
+<section id="grafico-section">
 <h2>Evolução do Índice de Sustentabilidade (Interativo)</h2>
 <p style="text-align: center; margin-bottom: 20px; color: #666;">Passe o mouse por cima das colunas para conferir os dados exatos de evolução.</p>
-<canvas id="grafico" width="800" height="400"></canvas>
+<div class="grafico-container">
+    <canvas id="grafico" width="800" height="400"></canvas>
+</div>
 </section>
 
 <section id="metas2050">
@@ -214,4 +227,4 @@
 
 <script src="js/script.js"></script>
 </body>
-</html>>
+</html>
