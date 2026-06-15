@@ -57,7 +57,7 @@ body{
 }
 
 /* ===========================
-HEADER AJUSTADO (Mais discreto e compacto)
+HEADER AJUSTADO
 =========================== */
 header{
     position:fixed;
@@ -65,7 +65,7 @@ header{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:10px 5%; /* Reduzido para não ocupar muito espaço vertical */
+    padding:10px 5%;
     background: rgba(46,125,50,0.95);
     backdrop-filter:blur(12px);
     z-index:9999;
@@ -118,7 +118,7 @@ nav a:hover::after{ width:100%; }
 #menuMobile{ display:none; }
 
 /* ===========================
-FONTE DO SOBRE O PROJETO (Aumentada e Destacada)
+FONTE DO SOBRE O PROJETO
 =========================== */
 .sobre-texto {
     max-width: 900px;
@@ -128,7 +128,7 @@ FONTE DO SOBRE O PROJETO (Aumentada e Destacada)
 }
 
 .sobre-texto p {
-    font-size: 1.35rem; /* Letra visivelmente maior e legível */
+    font-size: 1.35rem;
     line-height: 1.9;
     color: #333;
     margin-bottom: 25px;
@@ -229,9 +229,27 @@ GALERIA
 #curiosidade{ background:white; padding:40px; max-width:900px; margin:auto; border-radius:20px; text-align:center; font-size:1.2rem; box-shadow:var(--shadow-sm); }
 
 /* ===========================
-CANVAS GRAPH
+CANVAS GRAPH (Melhorado para Responsividade)
 =========================== */
-canvas{ display:block; margin:auto; background:white; border-radius:20px; max-width:100%; box-shadow:var(--shadow-md); cursor: pointer; }
+.grafico-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: auto; /* Permite arrastar pro lado no celular se a tela for muito pequena */
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-md);
+    padding: 10px;
+}
+
+canvas{ 
+    display: block; 
+    margin: auto; 
+    background: transparent; 
+    max-width: 100%; 
+    height: auto;
+    cursor: pointer; 
+}
 
 footer{ background:var(--primary-dark); color:white; text-align:center; padding:60px 20px; margin-top:50px; }
 
@@ -239,7 +257,7 @@ footer{ background:var(--primary-dark); color:white; text-align:center; padding:
 DARK MODE
 =========================== */
 body.dark{ background:var(--dark); color:white; }
-body.dark .card, body.dark .evento, body.dark .stat-card, body.dark .quiz-container, body.dark #infoRegiao, body.dark #curiosidade, body.dark .simulador-box, body.dark .beneficio-card, body.dark .ranking-card, body.dark canvas { background:var(--dark-card); color:white; }
+body.dark .card, body.dark .evento, body.dark .stat-card, body.dark .quiz-container, body.dark #infoRegiao, body.dark #curiosidade, body.dark .simulador-box, body.dark .beneficio-card, body.dark .ranking-card, body.dark .grafico-container { background:var(--dark-card); color:white; }
 body.dark .quiz-opcoes button { background: #2a2a2a; color: white; border-color: #444; }
 
 /* ===========================
@@ -254,7 +272,31 @@ RESPONSIVE
 
 @media(max-width:768px){
     #menuMobile{ display:block; background: transparent; color: white; border: 1px solid white;}
-    nav{ display:none; }
+    
+    nav{ 
+        display: none; 
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(46,125,50,0.98);
+        padding: 20px;
+        gap: 15px;
+        box-shadow: var(--shadow-md);
+        text-align: center;
+    }
+    
+    nav.active {
+        display: flex;
+    }
+    
+    nav a {
+        font-size: 1.1rem;
+        display: block;
+        padding: 10px 0;
+    }
+    
     .hero h1{ font-size:2.5rem; }
     section{ padding:60px 5%; }
 }
